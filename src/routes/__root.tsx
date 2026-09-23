@@ -1,0 +1,119 @@
+import { HeadContent, Outlet, Scripts, createRootRoute } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
+import type { ReactNode } from "react";
+
+import { SiteFooter, SiteHeader } from "~/components/Chrome";
+import { BUSINESS_NAME, SITE_URL } from "~/config";
+import appCss from "~/styles/app.css?url";
+
+/* The share card lives in /public and is copied out at build time. Absolute URL
+   only: link-preview crawlers ignore a bare path. */
+const SHARE_IMAGE = "/og-card.png";
+const SHARE_TITLE = `${BUSINESS_NAME} — second-hand clothing, one piece at a time`;
+const SHARE_DESCRIPTION =
+  "A small shop for second-hand clothing: one-of-a-kind pieces, photographed properly and described honestly. Each piece is listed once and sold once.";
+const SHARE_IMAGE_ALT = `${BUSINESS_NAME} — a sage S monogram in a sand seal beside the shop name, on cream`;
+
+export const Route = createRootRoute({
+  head: () => ({
+    meta: [
+      { charSet: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { title: SHARE_TITLE },
+      { name: "description", content: SHARE_DESCRIPTION },
+      { name: "theme-color", content: "#faf7f2" },
+      // Social share card (1200x630). Built from the brand mark in the sage +
+      // sand palette; the file is /public/og-card.png.
+      { property: "og:type", content: "website" },
+      { property: "og:site_name", content: BUSINESS_NAME },
+      { property: "og:title", content: SHARE_TITLE },
+      { property: "og:description", content: SHARE_DESCRIPTION },
+      { property: "og:url", content: `${SITE_URL}/` },
+      { property: "og:image", content: `${SITE_URL}${SHARE_IMAGE}` },
+      { property: "og:image:type", content: "image/png" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: SHARE_IMAGE_ALT },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: SHARE_TITLE },
+      { name: "twitter:description", content: SHARE_DESCRIPTION },
+      { name: "twitter:image", content: `${SITE_URL}${SHARE_IMAGE}` },
+      { name: "twitter:image:alt", content: SHARE_IMAGE_ALT },
+    ],
+    links: [
+      { rel: "stylesheet", href: appCss },
+      // Icons: the SVG mark for anything modern, PNG rasterisations for the
+      // rest, favicon.ico as the bare-domain fallback, apple-touch-icon for an
+      // iOS home-screen save.
+      { rel: "icon", type: "image/svg+xml", sizes: "any", href: "/monogram.svg" },
+      { rel: "icon", type: "image/png", sizes: "192x192", href: "/icon-192.png" },
+      { rel: "icon", type: "image/png", sizes: "512x512", href: "/icon-512.png" },
+      { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
+      { rel: "icon", sizes: "48x48", href: "/favicon.ico" },
+      // Brand type is self-hosted, so preloading the two faces that paint first
+      // avoids a flash of fallback serif on a phone connection.
+      {
+        rel: "preload",
+        href: "/fonts/playfair-display-400-normal.woff2",
+        as: "font",
+        type: "font/woff2",
+        crossOrigin: "anonymous",
+      },
+      {
+        rel: "preload",
+        href: "/fonts/inter-400-normal.woff2",
+        as: "font",
+        type: "font/woff2",
+        crossOrigin: "anonymous",
+      },
+    ],
+  }),
+  notFoundComponent: NotFound,
+  component: RootComponent,
+});
+
+function RootComponent() {
+  return (
+    <RootDocument>
+      <Outlet />
+    </RootDocument>
+  );
+}
+
+function RootDocument({ children }: { children: ReactNode }) {
+  return (
+    <html lang="en">
+      <head>
+        <HeadContent />
+      </head>
+      <body className="bg-cream text-charcoal flex min-h-dvh flex-col">
+        <SiteHeader />
+        <main className="flex-1">{children}</main>
+        <SiteFooter />
+        <Scripts />
+      </body>
+    </html>
+  );
+}
+
+/** A calm dead end: no piece here, and one way back to the shop. */
+function NotFound() {
+  return (
+    <section className="mx-auto flex max-w-6xl flex-col items-start px-5 py-24 sm:px-8 sm:py-32">
+      <p className="label text-sage-deep">Nothing here</p>
+      <h1 className="font-display text-ink mt-4 text-[2rem] leading-tight sm:text-[2.6rem]">
+        That page has moved on.
+      </h1>
+      <p className="text-muted mt-4 max-w-md text-[0.95rem] leading-relaxed">
+        The link may be old, or the piece may have found a home. Everything currently
+        available is in the shop.
+      </p>
+      <Link
+        to="/shop"
+        className="label bg-sage-deep text-cream hover:bg-sage-dark mt-8 px-6 py-3.5 transition-colors"
+      >
+        Browse the shop
+      </Link>
+    </section>
+  );
+}
