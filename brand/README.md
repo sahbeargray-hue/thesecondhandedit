@@ -55,6 +55,13 @@ The three rendered side by side in the phone header, and the size ladder, are in
 file (its viewBox is already tight; add ~12 units of padding if you want the same air),
 then regenerate the icons and the share card as below.
 
+## The six the owner chose between
+
+`mark-options/` holds six numbered candidates drawn for the private `/mark-options` comparison
+page: the two above plus four more (Ledger, Tall t, Superscript, Field). `mark-options/README.md`
+lists them, says what each one does differently, and records the fontTools pipeline that cut them
+from the site's own Playfair Display outlines. Whichever the owner picks is rebuilt from there.
+
 ## Regenerating the raster assets
 
 There is no image library in the repo on purpose, and no image tool is needed: the
