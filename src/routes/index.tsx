@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 
 import { ItemCard } from "~/components/ItemCard";
-import { BUSINESS_NAME, SISTER_SITE } from "~/config";
+import { BUSINESS_NAME } from "~/config";
 import { HAS_SAMPLE_LISTINGS, availableItems } from "~/data/items";
 
 export const Route = createFileRoute("/")({
@@ -56,14 +56,6 @@ function Home() {
               >
                 Shop the edit
               </Link>
-              <a
-                href={SISTER_SITE.url}
-                target="_blank"
-                rel="noreferrer"
-                className="label text-ink hover:text-sage-deep border-line border-b pb-1 transition-colors"
-              >
-                Visit {SISTER_SITE.name}
-              </a>
             </div>
           </div>
 
@@ -133,30 +125,6 @@ function Home() {
             end before the first real drop arrives.
           </p>
         ) : null}
-      </section>
-
-      {/* Sister site */}
-      <section className="bg-sage-deep text-cream mt-16 sm:mt-24">
-        <div className="mx-auto grid max-w-6xl gap-8 px-5 py-14 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end sm:px-8 sm:py-20">
-          <div>
-            <p className="label text-cream/80">Sister site</p>
-            <h2 className="font-display mt-3 text-[1.6rem] leading-tight sm:text-[2rem]">
-              {SISTER_SITE.name}
-            </h2>
-            <p className="text-cream/85 mt-4 max-w-md text-[0.9rem] leading-relaxed">
-              {SISTER_SITE.name} is the other half of what we do. If you like how these
-              pieces are put together, have a look at what is over there.
-            </p>
-          </div>
-          <a
-            href={SISTER_SITE.url}
-            target="_blank"
-            rel="noreferrer"
-            className="label text-cream border-cream/40 hover:bg-cream hover:text-sage-deep justify-self-start border px-6 py-3.5 transition-colors"
-          >
-            Visit {SISTER_SITE.name}
-          </a>
-        </div>
       </section>
     </>
   );

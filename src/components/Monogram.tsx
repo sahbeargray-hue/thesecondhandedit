@@ -1,58 +1,80 @@
 /**
- * The Second Hand Edit monogram — an "S" drawn as a single round-capped stroke
- * inside a soft-cornered seal.
+ * The Second Hand Edit mark — `tSHE`.
  *
- * The letterform is a PATH, not live text, so the mark renders identically in a
- * phone header, in the footer, in a favicon and in the rasterised share card —
- * no webfont has to load for it to look right. `variant` picks the positive
- * (sand seal, deep sage S — the header mark on cream) or its reverse (deep sage
- * seal, cream S — the footer, the favicon and anything at 32px or below).
+ * The owner's wordplay, drawn as a serif ligature: the three initials SHE set
+ * large in Playfair Display 600 and locked up tight, with a small lowercase t
+ * perched at the cap line in front of them. The initials read first; the t is
+ * deliberately secondary. The middle H and the t carry the accent in deep sage,
+ * the S and E are ink — sage + sand, the same two colours as the footer band and
+ * the browser icons, on cream.
  *
- * Not related to the sister site's round badge: no circle, no stacked words,
- * no borrowed colour or letterform.
+ * The letterforms are PATHS, not live text, so the mark renders identically in a
+ * phone header, in the footer, in a favicon and in the rasterised share card with
+ * no webfont loaded. `public/monogram.svg` is the same geometry and is the source
+ * of truth for the standalone file; the raster icons live in public/ and are
+ * generated from it (see CONTENT.md, section 8).
+ *
+ * The three initials sit in an interlocking lockup (each letter's stem slides a
+ * little behind its neighbour) — the approach, not the letterforms, palette or
+ * shape, of the sister site's mark.
+ */
+
+/** `--color-ink` in src/styles/app.css. */
+const INK = "#1f1d1a";
+/** `--color-sage-deep` in src/styles/app.css. */
+const SAGE_DEEP = "#4a5c4c";
+
+const VIEW_BOX = "-220.64 -732 1946.64 758";
+/** width / height of VIEW_BOX, so the mark keeps its proportions at any height. */
+export const MONOGRAM_ASPECT = 2.5681;
+
+const PATHS = [
+  {
+    d: "M274 -720Q330 -720 360.0 -708.0Q390 -696 412 -682Q424 -675 431.5 -671.5Q439 -668 446 -668Q456 -668 460.5 -679.0Q465 -690 468 -712H491Q490 -693 488.5 -668.0Q487 -643 486.5 -601.5Q486 -560 486 -492H463Q460 -543 440.5 -590.0Q421 -637 385.5 -667.5Q350 -698 295 -698Q246 -698 213.5 -669.0Q181 -640 181 -591Q181 -549 202.0 -520.5Q223 -492 261.5 -465.5Q300 -439 353 -405Q402 -373 441.0 -341.5Q480 -310 502.5 -272.0Q525 -234 525 -179Q525 -114 493.0 -71.0Q461 -28 407.0 -7.0Q353 14 289 14Q230 14 195.5 2.0Q161 -10 136 -23Q114 -37 102 -37Q92 -37 87.5 -26.0Q83 -15 80 7H57Q59 -16 59.5 -47.0Q60 -78 60.5 -127.5Q61 -177 61 -253H84Q88 -189 106.5 -133.5Q125 -78 163.5 -44.0Q202 -10 266 -10Q301 -10 329.5 -22.5Q358 -35 375.0 -61.5Q392 -88 392 -129Q392 -170 373.0 -201.0Q354 -232 320.0 -259.0Q286 -286 240 -314Q193 -344 152.0 -375.0Q111 -406 86.5 -445.5Q62 -485 62 -541Q62 -603 92.0 -642.5Q122 -682 170.5 -701.0Q219 -720 274 -720Z",
+    transform: "translate(0 0) scale(1)",
+    fill: INK,
+  },
+  {
+    d: "M458 0V-20Q491 -22 507.5 -28.0Q524 -34 529.5 -52.0Q535 -70 535 -106V-602Q535 -639 529.5 -656.5Q524 -674 507.5 -680.5Q491 -687 458 -688V-708Q485 -707 525.0 -706.0Q565 -705 605 -705Q649 -705 687.5 -706.0Q726 -707 749 -708V-688Q717 -687 700.5 -680.5Q684 -674 678.0 -656.5Q672 -639 672 -602V-106Q672 -70 678.0 -52.0Q684 -34 700.5 -28.0Q717 -22 749 -20V0Q726 -2 687.5 -2.5Q649 -3 605 -3Q565 -3 525.0 -2.5Q485 -2 458 0ZM36 0V-20Q69 -22 85.5 -28.0Q102 -34 107.5 -52.0Q113 -70 113 -106V-602Q113 -639 107.5 -656.5Q102 -674 85.5 -680.5Q69 -687 36 -688V-708Q61 -707 100.0 -706.0Q139 -705 184 -705Q224 -705 263.0 -706.0Q302 -707 327 -708V-688Q295 -687 278.5 -680.5Q262 -674 256.0 -656.5Q250 -639 250 -602V-106Q250 -70 256.0 -52.0Q262 -34 278.5 -28.0Q295 -22 327 -20V0Q302 -2 263.0 -2.5Q224 -3 184 -3Q139 -3 100.0 -2.5Q61 -2 36 0ZM195 -346V-366H590V-346Z",
+    transform: "translate(459 0) scale(1)",
+    fill: SAGE_DEEP,
+  },
+  {
+    d: "M559 -708Q555 -667 553.5 -628.5Q552 -590 552 -570Q552 -551 553.0 -533.5Q554 -516 555 -504H532Q524 -573 506.0 -612.5Q488 -652 457.5 -668.5Q427 -685 378 -685H323Q293 -685 277.0 -680.0Q261 -675 255.5 -659.0Q250 -643 250 -610V-98Q250 -66 255.5 -49.5Q261 -33 277.0 -28.0Q293 -23 323 -23H380Q431 -23 465.5 -42.0Q500 -61 521.0 -104.5Q542 -148 552 -224H575Q572 -193 572 -144Q572 -123 573.5 -83.0Q575 -43 579 0Q528 -2 464.0 -2.5Q400 -3 350 -3Q327 -3 289.5 -3.0Q252 -3 208.5 -2.5Q165 -2 120.5 -1.5Q76 -1 36 0V-20Q69 -22 85.5 -28.0Q102 -34 107.5 -52.0Q113 -70 113 -106V-602Q113 -639 107.5 -656.5Q102 -674 85.5 -680.5Q69 -687 36 -688V-708Q76 -707 120.5 -706.5Q165 -706 208.5 -705.5Q252 -705 289.5 -705.0Q327 -705 350 -705Q396 -705 454.5 -705.5Q513 -706 559 -708ZM398 -366Q398 -366 398.0 -356.0Q398 -346 398 -346H220Q220 -346 220.0 -356.0Q220 -366 220 -366ZM427 -498Q423 -441 423.5 -411.0Q424 -381 424 -356Q424 -331 425.0 -301.0Q426 -271 430 -214H407Q402 -248 391.5 -278.5Q381 -309 358.5 -327.5Q336 -346 294 -346V-366Q325 -366 344.5 -379.0Q364 -392 376.0 -412.5Q388 -433 394.5 -455.5Q401 -478 404 -498Z",
+    transform: "translate(1135 0) scale(1)",
+    fill: INK,
+  },
+  {
+    d: "M202 -681V-515H340V-495H202V-102Q202 -61 217.0 -44.0Q232 -27 260 -27Q286 -27 306.5 -48.0Q327 -69 342 -119L361 -112Q349 -59 318.5 -22.5Q288 14 229 14Q195 14 172.0 5.5Q149 -3 132 -19Q110 -42 102.0 -74.0Q94 -106 94 -159V-495H2V-515H94V-661Q125 -662 152.0 -666.5Q179 -671 202 -681Z",
+    transform: "translate(-209.68 -353.88) scale(0.52)",
+    fill: SAGE_DEEP,
+  },
+];
+
+/**
+ * The mark, at a given height. Width follows the lockup's proportions — never
+ * squash it into a square box. `aria-hidden` because the mark is always set
+ * beside the business name, which carries the accessible text.
  */
 export function Monogram({
-  size = 30,
-  variant = "sand",
+  height = 26,
   className = "",
 }: {
-  size?: number;
-  variant?: "sand" | "deep";
+  height?: number;
   className?: string;
 }) {
-  const seal = variant === "sand" ? "#eae0cc" : "#4a5c4c";
-  const edge = variant === "sand" ? "#d6c6a8" : "none";
-  const letter = variant === "sand" ? "#4a5c4c" : "#faf7f2";
-
   return (
     <svg
-      width={size}
-      height={size}
-      viewBox="0 0 64 64"
+      height={height}
+      width={height * MONOGRAM_ASPECT}
+      viewBox={VIEW_BOX}
       className={className}
       aria-hidden="true"
       focusable="false"
     >
-      <rect width="64" height="64" rx="16" fill={seal} />
-      {edge !== "none" ? (
-        <rect
-          x="1"
-          y="1"
-          width="62"
-          height="62"
-          rx="15"
-          fill="none"
-          stroke={edge}
-          strokeWidth="2"
-        />
-      ) : null}
-      <path
-        d="M44 21C42 16.5 37.5 14.5 32 14.5C25.5 14.5 21 18.5 21 23.5C21 28.5 25 30.5 32 32C39 33.5 45 36 45 41C45 46.5 40 50.5 33 50.5C27 50.5 22.5 48 20.5 43.5"
-        fill="none"
-        stroke={letter}
-        strokeWidth="6"
-        strokeLinecap="round"
-      />
+      {PATHS.map((path) => (
+        <path key={path.d.slice(0, 12)} d={path.d} transform={path.transform} fill={path.fill} />
+      ))}
     </svg>
   );
 }
