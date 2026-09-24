@@ -13,7 +13,7 @@ export const Route = createFileRoute("/policy")({
   component: Policy,
   head: () => ({
     meta: [
-      { title: "Policies — The Second Hand Edit" },
+      { title: "Policies, The Second Hand Edit" },
       {
         name: "description",
         content:
@@ -26,7 +26,7 @@ export const Route = createFileRoute("/policy")({
 /**
  * The shop's policies: what postage costs, what we do about returns, how the
  * condition labels are used, and how to reach us. Nothing here goes beyond what
- * the owner has approved — the returns wording in particular is verbatim, and
+ * the owner has approved, the returns wording in particular is verbatim, and
  * is rendered straight from src/data/policies.ts.
  */
 function Policy() {
@@ -54,7 +54,7 @@ function Policy() {
             </h2>
             <p className="text-muted mt-4 text-[0.95rem] leading-relaxed">
               A flat {SHIPPING_LABEL} shipping charge applies to every order. It
-              is charged once per order, in Australian dollars (AUD) — prices on
+              is charged once per order, in Australian dollars (AUD): prices on
               this site are in the same currency.
             </p>
             <p className="text-muted mt-3 text-[0.9rem] leading-relaxed">
@@ -78,7 +78,7 @@ function Policy() {
               Item condition
             </h2>
             <p className="text-muted mt-4 text-[0.95rem] leading-relaxed">
-              Every listing carries one of three condition labels — Excellent,
+              Every listing carries one of three condition labels: Excellent,
               Very good or Good. The label describes the single second-hand
               piece in that listing, as it was when we checked it over, and
               nothing more.
@@ -100,7 +100,7 @@ function Policy() {
               {CONDITION_NOTE}
             </p>
             <p className="text-muted mt-3 text-[0.9rem] leading-relaxed">
-              Want a closer look at something before you buy — another
+              Want a closer look at something before you buy: another
               photograph, an extra measurement, or a plain description of any
               wear? Ask, and we will send it.
             </p>
@@ -125,7 +125,7 @@ function Policy() {
             {ENQUIRY_IS_PLACEHOLDER ? (
               <p className="text-sage-deep mt-3 text-[0.8rem] leading-relaxed">
                 This address is still a placeholder, so enquiries are not wired
-                up yet — the owner&rsquo;s real address will be set here before
+                up yet, the owner&rsquo;s real address will be set here before
                 the shop goes live.
               </p>
             ) : null}

@@ -14,14 +14,14 @@ export default defineConfig({
     allowedHosts: true,
     // The dev server is reachable through the TLS proxy, so the HMR websocket
     // must dial back on 443, not the dev port. If the socket can't connect,
-    // pages still serve — hot reload degrades, never breaks.
+    // pages still serve, hot reload degrades, never breaks.
     hmr: { clientPort: 443 },
     // The dev server can serve source files; never let it serve local secrets,
     // and never let it serve anything outside the site dir. Gotchas this list
     // encodes: a custom `deny` REPLACES Vite's defaults (so .git must be
     // restated), patterns containing "/" match the ABSOLUTE path (so dir
     // patterns need a leading **/), and `allow` left to its default widens to
-    // the nearest workspace root — a stray .git or workspaces package.json in
+    // the nearest workspace root, a stray .git or workspaces package.json in
     // /home/team/shared would expose the whole shared dir.
     fs: {
       strict: true,

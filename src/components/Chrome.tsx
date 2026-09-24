@@ -4,8 +4,9 @@ import { Monogram } from "~/components/Monogram";
 import { BUSINESS_NAME, SISTER_SITE, SISTER_SITE_IS_PLACEHOLDER } from "~/config";
 
 /**
- * Sticky top bar. On a phone it is the mark plus two destinations: the shop,
- * and the sister site. Nothing else competes for the space.
+ * Sticky top bar. On a phone it is the mark plus the way into the shop. Nothing
+ * else competes for the space, and the sister site's single link is in the
+ * footer, not here.
  */
 export function SiteHeader() {
   return (
@@ -13,7 +14,7 @@ export function SiteHeader() {
       {/* The mark costs the row ~22px on a phone, so it is a little smaller
           there than on a wide screen and the wordmark keeps its own space. The
           mark is a wide lockup (tSHE), so its width is set from its
-          proportions at each height — a square box would squash it. */}
+          proportions at each height (a square box would squash it). */}
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-3 sm:gap-6 sm:px-8 sm:py-4">
         <Link to="/" className="group flex items-center gap-2 sm:gap-2.5">
           <Monogram
@@ -73,15 +74,16 @@ export function SiteFooter() {
             </Link>
           </div>
 
-          {/* The sister site's ONLY link on the whole site — it was in the
-              header and on a homepage band too, and the owner asked for one.
-              While SISTER_SITE.url is still the placeholder there is no link
-              here: a dead link is worse than none, and the moment the owner
-              gives the real address this renders itself (see CONTENT.md §3). */}
+          {/* The sister site's ONLY link on the whole site, in the footer. It was
+              in the header and on a homepage band too, and the owner asked for
+              one. While SISTER_SITE.url is still the placeholder marker there is
+              no link here: a dead link is worse than none, and the moment a real
+              address is set in src/config.ts this renders itself (see CONTENT.md
+              section 3a). */}
           <div className="label text-muted flex flex-col gap-3">
             <span className="text-charcoal">Elsewhere</span>
             {SISTER_SITE_IS_PLACEHOLDER ? (
-              <span className="text-muted">{SISTER_SITE.name} — link coming soon</span>
+              <span className="text-muted">{SISTER_SITE.name}</span>
             ) : (
               <a
                 href={SISTER_SITE.url}

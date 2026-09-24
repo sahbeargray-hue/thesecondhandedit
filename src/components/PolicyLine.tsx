@@ -4,7 +4,7 @@ import { SHIPPING_LINE } from "~/data/policies";
 
 /**
  * The short shipping-and-returns reference that sits next to a price or an
- * action — on the shop grid and on every item page.
+ * action, on the shop grid and on every item page.
  *
  * It is deliberately a TEXT LINK, never a button: an item page carries exactly
  * one action (the enquiry button), and this line must not become a second one.

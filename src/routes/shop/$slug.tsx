@@ -16,7 +16,7 @@ export const Route = createFileRoute("/shop/$slug")({
     meta: [
       {
         title: loaderData
-          ? `${loaderData.name}${loaderData.sold ? " — Sold" : ""} — The Second Hand Edit`
+          ? `${loaderData.name}${loaderData.sold ? ", Sold" : ""}, The Second Hand Edit`
           : "The Second Hand Edit",
       },
       {
@@ -40,7 +40,7 @@ function ItemPage() {
     "",
     "I would like to enquire about this piece:",
     "",
-    `${item.name} — ${formatPrice(item.price)} ${CURRENCY.code}`,
+    `${item.name}, ${formatPrice(item.price)} ${CURRENCY.code}`,
     `Size: ${item.size}`,
     `Condition: ${item.condition}`,
     `Listing: /shop/${item.slug}`,
@@ -116,7 +116,7 @@ function ItemPage() {
               <SampleBadge />
               <p className="text-muted mt-3 text-[0.8rem] leading-relaxed">
                 This is an example listing, not a real piece for sale. The photograph,
-                size, condition and price are placeholders until the first real drop —
+                size, condition and price are placeholders until the first real drop,
                 nothing on this page can be bought today.
               </p>
             </div>
@@ -127,7 +127,7 @@ function ItemPage() {
               to pay for it. */}
           {isUnbuyable(item) ? (
             <div role="alert" className="border-charcoal bg-sand mt-6 border-2 p-4">
-              <p className="label text-charcoal">Not for sale yet — no payment link set</p>
+              <p className="label text-charcoal">Not for sale yet: no payment link set</p>
               <p className="text-charcoal mt-3 text-[0.8rem] leading-relaxed">
                 This is a real piece, but its Stripe Payment Link has not been created yet, so
                 it cannot be bought. (Owner: add <code>paymentLink</code> to this entry in{" "}
@@ -136,7 +136,7 @@ function ItemPage() {
             </div>
           ) : null}
 
-          {/* One state, one action — and a sold piece has none at all, only a
+          {/* One state, one action, and a sold piece has none at all, only a
               link back to the shop. `isSold` is checked before `canBuy`, so a piece
               that has gone never renders a buy action even if a stale `paymentLink`
               is still on it in src/data/items.ts. */}
@@ -144,8 +144,8 @@ function ItemPage() {
             <div className="border-sand-deep bg-sand/50 mt-6 border p-5">
               <p className="label text-charcoal">Sold</p>
               <p className="text-muted mt-3 text-[0.85rem] leading-relaxed">
-                This one has found a home. Every piece here is one of one — one size, one
-                condition, one photograph — so there is no second one behind it, and it will
+                This one has found a home. Every piece here is one of one (one size, one
+                condition, one photograph), so there is no second one behind it, and it will
                 not be restocked.
               </p>
               <Link
@@ -162,7 +162,7 @@ function ItemPage() {
               rel="noopener noreferrer"
               className="label bg-sage-deep text-cream hover:bg-sage-dark mt-6 block w-full px-6 py-4 text-center transition-colors sm:inline-block sm:w-auto"
             >
-              Buy this piece — {formatPrice(item.price)} + {SHIPPING_LABEL} shipping
+              Buy this piece: {formatPrice(item.price)} + {SHIPPING_LABEL} shipping
             </a>
           ) : (
             <a
@@ -173,7 +173,7 @@ function ItemPage() {
             </a>
           )}
           {/* Postage and returns sit next to the one action, as plain text with a
-            link — never a second button, so the page keeps a single action. */}
+            link, never a second button, so the page keeps a single action. */}
           <PolicyLine className="mt-4" />
 
           {/* A sold piece gets no note about paying: nothing on this page may read
@@ -192,8 +192,8 @@ function ItemPage() {
                     <>
                       {" "}
                       <span className="text-sage-deep">
-                        (Enquiries currently go to a placeholder address —{" "}
-                        {ENQUIRY_EMAIL} — until the owner&rsquo;s real address is set.)
+                        (Enquiries currently go to a placeholder address,{" "}
+                        {ENQUIRY_EMAIL}, until the owner&rsquo;s real address is set.)
                       </span>
                     </>
                   ) : null}
@@ -244,7 +244,7 @@ function Gone() {
         This piece has found a home.
       </h1>
       <p className="text-muted mt-4 max-w-md text-[0.95rem] leading-relaxed">
-        Nothing here is restocked — every listing is a single piece, so this one has
+        Nothing here is restocked: every listing is a single piece, so this one has
         already gone.
       </p>
       <Link

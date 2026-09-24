@@ -9,13 +9,13 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-/** Three pieces to show on the homepage — a coat, a skirt and a pair of boots. */
+/** Three pieces to show on the homepage: a coat, a skirt and a pair of boots. */
 const FEATURED_SLUGS = ["camel-wool-overcoat", "emerald-velvet-skirt", "ochre-suede-ankle-boots"];
 
 const REASONS = [
   {
     heading: "One of one",
-    body: "Nothing here is duplicated. One size, one condition, one piece — there is no restock and no second size waiting behind it.",
+    body: "Nothing here is duplicated. One size, one condition, one piece. There is no restock and no second size waiting behind it.",
   },
   {
     heading: "A better price",
@@ -46,7 +46,7 @@ function Home() {
             </h1>
             <p className="text-muted mt-5 max-w-md text-[0.95rem] leading-relaxed sm:text-[1.02rem]">
               {BUSINESS_NAME} is a small shop for second-hand clothing, chosen one piece
-              at a time. Photographed properly, described honestly, listed once — when a
+              at a time. Photographed properly, described honestly, listed once, when a
               piece goes, it goes.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
@@ -113,7 +113,7 @@ function Home() {
           </div>
         ) : (
           <p className="text-muted mt-8 text-[0.9rem] leading-relaxed">
-            Nothing on the rail at the moment — everything listed so far has sold, and each
+            Nothing on the rail at the moment. Everything listed so far has sold, and each
             piece is the only one of its kind, so the rail fills up again as new pieces are
             photographed and listed.
           </p>
