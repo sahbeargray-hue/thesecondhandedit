@@ -9,14 +9,14 @@ import appCss from "~/styles/app.css?url";
 /* The share card lives in /public and is copied out at build time. Absolute URL
    only: link-preview crawlers ignore a bare path. */
 const SHARE_IMAGE = "/og-card.png";
-const SHARE_TITLE = `${BUSINESS_NAME} — second-hand clothing, one piece at a time`;
+const SHARE_TITLE = `${BUSINESS_NAME}: second-hand clothing, one piece at a time`;
 const SHARE_DESCRIPTION =
   "A small shop for second-hand clothing: one-of-a-kind pieces, photographed properly and described honestly. Each piece is listed once and sold once.";
 /* Matches what public/og-card.png actually draws: the tSHE lockup at the top
    left (S and E in ink, the middle H and the small t in deep sage), the headline,
-   and the shop name above the closing rule. Keep the two in step — the card is
+   and the shop name above the closing rule. Keep the two in step, the card is
    regenerated from src/routes/og-card-preview.tsx. */
-const SHARE_IMAGE_ALT = `${BUSINESS_NAME} — the tSHE serif monogram in ink and deep sage on cream, above the headline "Every piece here is the only one."`;
+const SHARE_IMAGE_ALT = `${BUSINESS_NAME}: the tSHE serif monogram in ink and deep sage on cream, above the headline "Every piece here is the only one."`;
 
 export const Route = createRootRoute({
   head: () => ({

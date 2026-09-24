@@ -1,5 +1,5 @@
 /* Self-hosted brand type (latin subset woff2). Downloaded from Google Fonts so
-   the site makes no third-party request at runtime — the files live in
+   the site makes no third-party request at runtime, the files live in
    /public/fonts and are served from our own origin. */
 @font-face {
   font-family: "Inter";
@@ -61,7 +61,7 @@
 @import "tailwindcss";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   Brand palette — SAGE + SAND.
+   Brand palette: SAGE + SAND.
 
    Cream and paper are the base surfaces; sand is the warm neutral that carries
    bands, fills and borders; sage is the only accent. There is no second accent
@@ -75,7 +75,7 @@
      cream #faf7f2 on sage-dark #3a4a3d .. 8.8:1     primary button, hover
      muted #635e59 <-> cream .. 6.0:1 · sand .. 5.1:1 · paper .. 6.6:1
      ink #1f1d1a <-> sand .. 14.9:1                  headings on a sand band
-   `sage` is decorative only (dots, hairlines, 3.0:1+ graphics) — never text.
+   `sage` is decorative only (dots, hairlines, 3.0:1+ graphics), never text.
    ───────────────────────────────────────────────────────────────────────────── */
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;

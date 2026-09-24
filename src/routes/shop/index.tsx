@@ -9,7 +9,7 @@ export const Route = createFileRoute("/shop/")({
   component: Shop,
   head: () => ({
     meta: [
-      { title: "Shop — The Second Hand Edit" },
+      { title: "Shop, The Second Hand Edit" },
       {
         name: "description",
         content:
@@ -41,7 +41,7 @@ function Shop() {
         </h1>
         <p className="text-muted mt-4 text-[0.95rem] leading-relaxed">
           Each listing is a single piece. There is one size, one condition and one price
-          per card — and once it sells, it does not come back.
+          per card, and once it sells, it does not come back.
         </p>
       </header>
 
@@ -53,7 +53,7 @@ function Shop() {
 
       {nothingLeft ? (
         /* Every piece has sold. An honest, finished-looking page beats an empty
-           grid — and it says the one thing that is true here: new pieces come
+           grid, and it says the one thing that is true here: new pieces come
            when they come. */
         <div className="border-sand-deep bg-sand/40 mt-8 border px-6 py-14 text-center sm:px-10 sm:py-20">
           <p className="label text-sage-deep">Nothing on the rail right now</p>
@@ -61,7 +61,7 @@ function Shop() {
             Everything has found a home.
           </h2>
           <p className="text-muted mx-auto mt-4 max-w-md text-[0.92rem] leading-relaxed">
-            Every piece listed so far has sold, and each one was the only one of its kind —
+            Every piece listed so far has sold, and each one was the only one of its kind,
             so none of them come back. New pieces go up as they are photographed, checked
             over and priced, which means the rail is worth another look soon.
           </p>
@@ -74,7 +74,7 @@ function Shop() {
         </div>
       ) : (
         <>
-          {/* Category chips — the only filtering, and it stays out of the way on a phone. */}
+          {/* Category chips: the only filtering, and it stays out of the way on a phone. */}
           <div className="border-line mt-8 border-b pb-4">
             <div className="scrollbar-none -mx-5 flex gap-2 overflow-x-auto px-5 sm:mx-0 sm:flex-wrap sm:px-0">
               {chips.map((chip) => {
@@ -100,7 +100,7 @@ function Shop() {
             </div>
           </div>
 
-          {/* Counts available pieces only — a sold piece is not on the rail. */}
+          {/* Counts available pieces only: a sold piece is not on the rail. */}
           <p className="label text-muted mt-5">
             {shown.length} {shown.length === 1 ? "piece" : "pieces"}
             <span aria-hidden className="bg-line mx-3 inline-block h-px w-5 align-middle" />
@@ -115,7 +115,7 @@ function Shop() {
 
           {shown.length === 0 ? (
             <p className="text-muted mt-10 text-[0.9rem]">
-              Nothing in this aisle right now — try another category.
+              Nothing in this aisle right now. Try another category.
             </p>
           ) : null}
         </>

@@ -1,11 +1,11 @@
 /**
- * The Second Hand Edit mark — `tSHE`.
+ * The Second Hand Edit mark: `tSHE`.
  *
  * The owner's wordplay, drawn as a serif ligature: the three initials SHE set
  * large in Playfair Display 600 and locked up tight, with a small lowercase t
  * perched at the cap line in front of them. The initials read first; the t is
  * deliberately secondary. The middle H and the t carry the accent in deep sage,
- * the S and E are ink — sage + sand, the same two colours as the footer band and
+ * the S and E are ink: sage + sand, the same two colours as the footer band and
  * the browser icons, on cream.
  *
  * The letterforms are PATHS, not live text, so the mark renders identically in a
@@ -15,7 +15,7 @@
  * generated from it (see CONTENT.md, section 8).
  *
  * The three initials sit in an interlocking lockup (each letter's stem slides a
- * little behind its neighbour) — the approach, not the letterforms, palette or
+ * little behind its neighbour): the approach, not the letterforms, palette or
  * shape, of the sister site's mark.
  */
 
@@ -52,7 +52,7 @@ const PATHS = [
 ];
 
 /**
- * The mark, at a given height. Width follows the lockup's proportions — never
+ * The mark, at a given height. Width follows the lockup's proportions, never
  * squash it into a square box. `aria-hidden` because the mark is always set
  * beside the business name, which carries the accessible text.
  */

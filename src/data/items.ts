@@ -1,11 +1,11 @@
 /**
- * THE SHOP DATA — every piece the shop sells lives in this one file.
+ * THE SHOP DATA: every piece the shop sells lives in this one file.
  *
  * ── How the owner adds a real piece ──────────────────────────────────────────
  * 1. Put the photograph(s) in `public/images/items/` and reference them as
  *    "/images/items/<file>.jpg" (that folder is served from the site root).
  * 2. Add one object to the `items` array below. Copy an existing entry and edit
- *    it — every field is required except `brand`, `paymentLink` and `sold`.
+ *    it, every field is required except `brand`, `paymentLink` and `sold`.
  * 3. Delete the sample entries (and remove `sample: true` everywhere) once real
  *    pieces are in. Any entry with `sample: true` wears a visible "Sample
  *    listing" badge on the shop grid and on its item page, and the shop page
@@ -14,20 +14,20 @@
  * 4. Set `paymentLink` to that piece's Stripe Payment Link (see the field note
  *    below) so the item page can send the buyer to checkout. A real piece with
  *    no `paymentLink` shows a loud "not for sale yet" warning instead of a Buy
- *    action — that warning is deliberate: no real piece may sit in the shop
+ *    action, that warning is deliberate: no real piece may sit in the shop
  *    unable to be bought.
  * 5. When the piece sells, set `sold: true` on it (see the field note below) AND
  *    deactivate that piece's Stripe Payment Link in Stripe in the same sitting.
  *    The site hides a sold piece everywhere, but it cannot switch off the Stripe
- *    link — a live link on a sold piece can still take a buyer's money.
+ *    link. A live link on a sold piece can still take a buyer's money.
  *
  * ── The shape ────────────────────────────────────────────────────────────────
  * slug          URL ending: "/shop/camel-wool-overcoat". Lowercase, hyphens.
  * name          Piece name as it should read on the card and item page.
- * brand         The label on the piece. OPTIONAL — omit it when there is no
+ * brand         The label on the piece. OPTIONAL: omit it when there is no
  *               visible label rather than inventing a brand.
  * price         Whole number in the shop currency (see `CURRENCY` in config.ts).
- *               Pieces sell between A$25 and A$120 — keep every price inside
+ *               Pieces sell between A$25 and A$120: keep every price inside
  *               that band.
  * size          Size as marked, plus a plain-English fit hint where useful.
  * condition     One of the three values in `CONDITIONS` below.
@@ -40,7 +40,7 @@
  * sample        true while it is an example listing, not a real piece.
  * paymentLink   OPTIONAL, and only for the piece's own Stripe Payment Link.
  *               The value is a full "https://buy.stripe.com/…" URL, created by
- *               hand inside the business's own Stripe account — one link per
+ *               hand inside the business's own Stripe account: one link per
  *               piece, priced in AUD with the A$12 flat-rate shipping added at
  *               checkout and the buyer's shipping address collected there.
  *               Never invent one of these: the site does not create links and
@@ -51,7 +51,7 @@
  *               the shop grid, the homepage and the filter counts, and its own
  *               page shows a Sold state with no Buy and no Enquire action.
  *               Sold beats `paymentLink` in the code, so a sold piece can never
- *               render a buy action — but the Stripe link itself is still live
+ *               render a buy action, but the Stripe link itself is still live
  *               until the owner deactivates it in Stripe (step 5 above).
  */
 
@@ -91,12 +91,12 @@ export interface Item {
   measurements: Measurement[];
   sample: boolean;
   /**
-   * The piece's Stripe Payment Link — a full "https://buy.stripe.com/…" URL.
+   * The piece's Stripe Payment Link: a full "https://buy.stripe.com/…" URL.
    *
    * OPTIONAL, and left off every sample listing. There is one link per piece,
    * created in the business's own Stripe account (AUD, with the A$12 flat-rate
    * shipping added and the buyer's shipping address collected at checkout). The
-   * site never creates a link and never invents a URL — it only sends the buyer
+   * site never creates a link and never invents a URL: it only sends the buyer
    * to the link that is set here.
    *
    * Set it and the item page's one action becomes "Buy this piece" and points
@@ -115,13 +115,13 @@ export interface Item {
    *
    * ── Sold beats link ────────────────────────────────────────────────────────
    * A piece with both `sold: true` and a `paymentLink` renders NO buy action:
-   * the code checks `sold` first (see `canBuy` below). That is deliberate — a
+   * the code checks `sold` first (see `canBuy` below). That is deliberate: a
    * stale link must never be offered on a piece that has gone.
    *
    * ── What the site cannot do ───────────────────────────────────────────────
    * The site cannot switch off a Stripe Payment Link. Marking a piece sold here
    * does not stop its link from taking money, so **deactivate the piece's
-   * Payment Link in Stripe at the same time as marking it sold** — the link is
+   * Payment Link in Stripe at the same time as marking it sold**: the link is
    * the real control, this flag is only the display. See CONTENT.md section 6.
    */
   sold?: boolean;
@@ -138,7 +138,7 @@ export const items: Item[] = [
     slug: "camel-wool-overcoat",
     name: "Camel Wool Overcoat",
     price: 118,
-    size: "M — fits a UK 12–14",
+    size: "M (fits a UK 12–14)",
     condition: "Excellent",
     category: "Outerwear",
     image: "/images/items/camel-wool-overcoat.jpg",
@@ -159,7 +159,7 @@ export const items: Item[] = [
     slug: "ivory-silk-slip-dress",
     name: "Ivory Silk Slip Dress",
     price: 86,
-    size: "S — fits a UK 8",
+    size: "S (fits a UK 8)",
     condition: "Very good",
     category: "Dresses",
     image: "/images/items/ivory-silk-slip-dress.jpg",
@@ -219,7 +219,7 @@ export const items: Item[] = [
     slug: "rust-corduroy-trousers",
     name: "Rust Corduroy Wide-Leg Trousers",
     price: 52,
-    size: '30" waist — fits a UK 12',
+    size: '30" waist (fits a UK 12)',
     condition: "Good",
     category: "Trousers",
     image: "/images/items/rust-corduroy-trousers.jpg",
@@ -239,7 +239,7 @@ export const items: Item[] = [
     slug: "black-leather-biker-jacket",
     name: "Black Leather Biker Jacket",
     price: 120,
-    size: "S — fits a UK 10",
+    size: "S (fits a UK 10)",
     condition: "Excellent",
     category: "Outerwear",
     image: "/images/items/black-leather-biker-jacket.jpg",
@@ -247,7 +247,7 @@ export const items: Item[] = [
       "Black leather biker jacket photographed flat on a neutral studio backdrop",
     summary: "Asymmetric zip, cropped cut, softened leather.",
     notes:
-      "An asymmetric-zip biker in soft, already-broken-in leather — the kind of piece that takes years to get right. Zip runs smoothly; lining and all hardware sound.",
+      "An asymmetric-zip biker in soft, already-broken-in leather, the kind of piece that takes years to get right. Zip runs smoothly; lining and all hardware sound.",
     measurements: [
       { label: "Chest, underarm to underarm", value: "50 cm" },
       { label: "Shoulder, seam to seam", value: "42 cm" },
@@ -268,7 +268,7 @@ export const items: Item[] = [
       "Ecru linen blazer photographed flat on a neutral studio backdrop",
     summary: "Unstructured linen, patch pockets, single button.",
     notes:
-      "Unstructured linen with patch pockets — light enough to wear as a jacket, sharp enough to wear over a dress. Dry-cleaned and ready; faint softening at the collar edge.",
+      "Unstructured linen with patch pockets, light enough to wear as a jacket, sharp enough to wear over a dress. Dry-cleaned and ready; faint softening at the collar edge.",
     measurements: [
       { label: "Chest, underarm to underarm", value: "52 cm" },
       { label: "Shoulder, seam to seam", value: "43 cm" },
@@ -299,7 +299,7 @@ export const items: Item[] = [
     slug: "cream-cable-knit-cardigan",
     name: "Cream Cable-Knit Cardigan",
     price: 62,
-    size: "M/L — relaxed fit",
+    size: "M/L (relaxed fit)",
     condition: "Excellent",
     category: "Knitwear",
     image: "/images/items/cream-cable-knit-cardigan.jpg",
@@ -307,7 +307,7 @@ export const items: Item[] = [
       "Cream cable-knit cardigan photographed flat on a neutral studio backdrop",
     summary: "Chunky lambswool cable, horn buttons.",
     notes:
-      "A chunky cable knit in a warm cream lambswool, with horn-look buttons and a relaxed line. No pilling, no moth damage — one of the tidiest knits we have listed.",
+      "A chunky cable knit in a warm cream lambswool, with horn-look buttons and a relaxed line. No pilling, no moth damage, one of the tidiest knits we have listed.",
     measurements: [
       { label: "Chest, underarm to underarm", value: "58 cm" },
       { label: "Length, back neck to hem", value: "70 cm" },
@@ -319,7 +319,7 @@ export const items: Item[] = [
     slug: "ochre-suede-ankle-boots",
     name: "Ochre Suede Ankle Boots",
     price: 88,
-    size: "38 — fits a UK 5",
+    size: "38 (fits a UK 5)",
     condition: "Good",
     category: "Shoes",
     image: "/images/items/ochre-suede-ankle-boots.jpg",
@@ -367,10 +367,10 @@ export function canBuy(item: Item): boolean {
 
 /**
  * A real piece (not a sample) that is still for sale but has no `paymentLink`
- * cannot be bought and must say so on its own page, loudly — see the item route.
+ * cannot be bought and must say so on its own page, loudly, see the item route.
  * This is the same safety net as `ENQUIRY_IS_PLACEHOLDER` in src/config.ts: the
  * shop should be unable to put a real piece on show without a way to pay for it.
- * A sold piece is not "unbuyable" — it is gone, and has its own state.
+ * A sold piece is not "unbuyable": it is gone, and has its own state.
  */
 export function isUnbuyable(item: Item): boolean {
   return !isSold(item) && !item.sample && !item.paymentLink;
@@ -378,7 +378,7 @@ export function isUnbuyable(item: Item): boolean {
 
 /** The line shown once at the top of the shop while samples are on show. */
 export const SAMPLE_NOTE =
-  "Every piece below is an example listing while we photograph the first real drop — the photos, sizes, conditions and prices are placeholders, and nothing here is for sale yet.";
+  "Every piece below is an example listing while we photograph the first real drop: the photos, sizes, conditions and prices are placeholders, and nothing here is for sale yet.";
 
 /** Look one up by slug. Returns undefined for an unknown slug. */
 export function getItem(slug: string): Item | undefined {

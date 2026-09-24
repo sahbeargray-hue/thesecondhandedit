@@ -1,12 +1,12 @@
-# The brand mark — `tSHE`
+# The brand mark: `tSHE`
 
 The owner's read of the name: **The Second Hand Edit** → the initials **SHE**, with a
 small lowercase **t** in front of them. That wordplay is the mark.
 
 ## What is drawn
 
-A serif ligature, cut from the site's own display type — **Playfair Display 600** for
-SHE and **Playfair Display 500** for the lowercase t — outlined as SVG paths, so the
+A serif ligature, cut from the site's own display type: **Playfair Display 600** for
+SHE and **Playfair Display 500** for the lowercase t, outlined as SVG paths, so the
 mark renders identically everywhere with no webfont loaded.
 
 - **SHE**, set large and locked up tight: each letter's stem slides a little behind its
@@ -24,10 +24,10 @@ accent letter on a warm ground). The letterforms, the palette and the shape are 
 
 | What | Where |
 | --- | --- |
-| The standing mark, letters only | `public/monogram.svg` — **source of truth** |
+| The standing mark, letters only | `public/monogram.svg`: **source of truth** |
 | The same mark inline in React (header + footer) | `src/components/Monogram.tsx` |
-| Browser tab icon, 16/32/48 | `public/favicon.ico` — the **SHE-only** variant |
-| App / manifest icons | `public/icon-192.png`, `public/icon-512.png` — the full **tSHE** mark on sand |
+| Browser tab icon, 16/32/48 | `public/favicon.ico`: the **SHE-only** variant |
+| App / manifest icons | `public/icon-192.png`, `public/icon-512.png`: the full **tSHE** mark on sand |
 | iOS home screen | `public/apple-touch-icon.png` |
 | Social share card, 1200×630 | `public/og-card.png`, composed from `brand/og-card.html` |
 
@@ -62,12 +62,12 @@ letterforms are paths, and a browser renders them exactly. From `/home/team/shar
 with the dev server running:
 
 1. **Icons.** Render the icon SVGs in a browser at their final pixel size and screenshot
-   each one — see the process used for the current set: a temporary page in `public/`
+   each one, see the process used for the current set: a temporary page in `public/`
    with each icon as `<img width="N" height="N">`, one element screenshot per size at
    device scale 1, then wrap the 16/32/48 PNGs into `favicon.ico` (a 6-byte ICONDIR +
    one 16-byte ICONDIRENTRY per image + the PNG buffers; every current browser accepts
    PNG inside ICO). Delete the temporary page afterwards.
-2. **Share card.** Follow the steps at the top of `brand/og-card.html` — it is a plain
+2. **Share card.** Follow the steps at the top of `brand/og-card.html`: it is a plain
    CSS page (Tailwind is not available to a static file), copied into `public/` for the
    screenshot and deleted again.
 3. **Check the head tags** in the served HTML, not the source, and check every asset
@@ -75,4 +75,4 @@ with the dev server running:
    `/apple-touch-icon.png`, `/og-card.png`.
 
 If the card's composition changes, change `SHARE_IMAGE_ALT` in `src/routes/__root.tsx`
-to match what is drawn — that description is what a screen reader announces.
+to match what is drawn: that description is what a screen reader announces.

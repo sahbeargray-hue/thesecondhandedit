@@ -6,7 +6,7 @@
  *   bun scripts/check-policy-wording.mjs <base-url>      # e.g. the live site
  *
  * The APPROVED sentence below is a second, independent copy of the wording the
- * owner signed off — typed from the brief, NOT read from the site's source. That
+ * owner signed off, typed from the brief, NOT read from the site's source. That
  * is deliberate: if someone edits `RETURNS_POLICY` in src/data/policies.ts, this
  * check fails instead of agreeing with the edit.
  *
@@ -24,7 +24,9 @@ const base = (process.argv[2] ?? "http://localhost:3000").replace(/\/$/, "");
 const url = `${base}/policy`;
 
 /** Visible text of an HTML document: no scripts/styles/tags, entities decoded,
- *  whitespace runs collapsed. */
+ *  whitespace runs collapsed. The decoder lists no em dash entity on purpose:
+ *  the site's style rule forbids em dashes in its copy, so the pages never emit
+ *  one and there is nothing here to decode. */
 function visibleText(html) {
   const body = html.split(/<body[^>]*>/i)[1] ?? html;
   const withoutCode = body.replace(
@@ -41,7 +43,6 @@ function visibleText(html) {
     "&nbsp;": " ",
     "&rsquo;": "\u2019",
     "&lsquo;": "\u2018",
-    "&mdash;": "\u2014",
     "&ndash;": "\u2013",
     "&middot;": "\u00b7",
   };
@@ -63,7 +64,7 @@ for (let attempt = 1; attempt <= 3; attempt += 1) {
     break;
   } catch (error) {
     if (attempt === 3) {
-      console.error(`FETCH FAILED  ${url} — ${error.message}`);
+      console.error(`FETCH FAILED  ${url}: ${error.message}`);
       process.exit(1);
     }
     await sleep(1500);
@@ -76,7 +77,7 @@ const found = text.includes(APPROVED);
 console.log(`checked   ${url}`);
 console.log(`approved  ${APPROVED.length} chars`);
 console.log(
-  `status    ${found ? "MATCH — wording is present verbatim" : "MISMATCH"}`,
+  `status    ${found ? "MATCH: wording is present verbatim" : "MISMATCH"}`,
 );
 
 if (!found) {
@@ -90,7 +91,7 @@ if (!found) {
   process.exit(1);
 }
 
-// A sanity check that the sentence is not merely present — it is present once,
+// A sanity check that the sentence is not merely present: it is present once,
 // as its own paragraph, on the page that is meant to carry it.
 const occurrences = text.split(APPROVED).length - 1;
 console.log(`count     ${occurrences} occurrence(s) on /policy`);

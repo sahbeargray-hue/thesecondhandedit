@@ -1,6 +1,6 @@
 // Production server for the built site. The TanStack Start build emits a portable
 // fetch handler (dist/server/server.js) plus static client assets (dist/client);
-// this wraps them in a Bun server on port 3000 — static files first, SSR for the
+// this wraps them in a Bun server on port 3000: static files first, SSR for the
 // rest. Run `bun run build` before starting. Restart it with `bun run publish`.
 //
 // Starting a new instance supersedes the old one: it frees the port no matter
@@ -20,7 +20,7 @@ const HOST = "0.0.0.0";
 /**
  * Seconds a connection may go without bytes in either direction before Bun closes
  * it. Bun's default is 10, and it counts a request whose handler is still running
- * but has written nothing yet — so a server function waiting on an AI provider for
+ * but has written nothing yet, so a server function waiting on an AI provider for
  * 12s dies mid-flight and the platform gateway hands the visitor an empty 502.
  * 255 is the maximum Bun accepts; handlers that regularly run long should still
  * write bytes early (stream) or split into start-then-poll.
