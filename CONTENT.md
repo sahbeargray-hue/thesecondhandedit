@@ -273,3 +273,33 @@ accounts, cart/basket, seller tools and inventory admin.
 Selling a piece is a two-step job: `sold: true` in `src/data/items.ts` *and* the piece's
 Payment Link deactivated in Stripe (section 6). The code is written so a sold piece can never
 render a buy action, but the Stripe link is the real control and the site cannot reach it.
+
+## 9. The mark options page (temporary, and the one exception)
+
+`/mark-options` is a private page that shows six candidate `tSHE` marks beside the built one so
+the owner can pick a number. It is **not** part of the shop and it is deliberately awkward to
+find: unlisted, `robots: noindex, nofollow`, absent from the header and footer, and no shop
+page links to it. Nothing on the shop pages changes while it exists.
+
+| What | Where |
+| --- | --- |
+| The page | `src/routes/mark-options.tsx` (the only route that uses any of this) |
+| The six marks' geometry, generated | `src/components/mark-options/marks.ts` |
+| Mark, header, footer lockup, favicon row | `src/components/mark-options/Preview.tsx` |
+| The true 16px rasters, generated | `src/components/mark-options/rasters.ts` |
+| Standalone SVG of each candidate | `brand/mark-options/01-wordmark.svg` and so on |
+
+The path data is emitted, not hand written: the letterforms are cut from the site's own Playfair
+Display outlines with fontTools (`400` for Ledger, `500` for the small t, `600` for SHE and for
+the Tall t), so a candidate is the brand type, not a new typeface. The 16px rasters are browser
+screenshots at device scale 1, which is why the page can show the real favicon pixels.
+
+**When the owner has picked a number:**
+
+1. Rebuild `public/monogram.svg`, the `PATHS`/`VIEW_BOX`/`MONOGRAM_ASPECT` in
+   `src/components/Monogram.tsx` and the icon set from the chosen file in `brand/mark-options/`
+   (or `brand/directions/02-wordmark.svg` / `03-tucked.svg`, which candidates 1 and 2 come from),
+   following section 8 and `brand/README.md`. Keep a simplified SHE-only favicon if the t does
+   not survive 16px: the page says, per candidate, whether it does.
+2. Delete this page: the route, `src/components/mark-options/` and the entry it leaves in the
+   generated route tree. `brand/mark-options/` can stay as the drawing record.
