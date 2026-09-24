@@ -34,14 +34,31 @@ export const ENQUIRY_EMAIL = "the-second-hand-edit-521890aa@ctomail.io";
 export const ENQUIRY_IS_PLACEHOLDER = ENQUIRY_EMAIL.includes("REPLACE-WITH-OWNER-EMAIL");
 
 /**
- * The sister site, linked from the header, the homepage and the footer.
- * ⚠️ REPLACE the URL with The Vintage Edit's real public address — the value
- * below is a placeholder and has not been confirmed with the owner.
+ * The sister site — exactly ONE link on the whole site, in the footer
+ * (`src/components/Chrome.tsx`). It used to be in the header and on a homepage
+ * band as well; the owner asked for it to be cut back, so those are gone. Do not
+ * add another one anywhere else.
+ *
+ * ⚠️ REPLACE the URL with The Vintage Edit's real public address. The value below
+ * is the placeholder marker and has not been confirmed with the owner — the
+ * address that used to sit here returned a server error, so nothing is linked
+ * while it is unconfirmed.
  */
 export const SISTER_SITE = {
   name: "The Vintage Edit",
-  url: "https://thevintageedit.com",
+  url: "https://REPLACE-WITH-SISTER-SITE-URL",
 };
+
+/**
+ * True while the address above is still the placeholder. Same pattern as
+ * `ENQUIRY_IS_PLACEHOLDER`: the footer then shows the sister site's name as plain
+ * text instead of a link, so a dead link cannot ship, and the real address can
+ * simply be pasted in above. The marker is matched inside the value, so an
+ * address that happens to contain it is impossible to ship by accident.
+ */
+export const SISTER_SITE_IS_PLACEHOLDER = SISTER_SITE.url.includes(
+  "REPLACE-WITH-SISTER-SITE",
+);
 
 /**
  * Prices are written without a currency in the data file; this is how they read.

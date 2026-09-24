@@ -82,8 +82,32 @@ contains `REPLACE-WITH-OWNER-EMAIL`; the item page and `/policy` then print a vi
 reminder that enquiries are not wired up. Keep that check exactly as it is — it is what stops
 a placeholder address shipping unnoticed if someone pastes one in again.
 
-The same file holds `SISTER_SITE.url` (The Vintage Edit link in the header, homepage and
-footer) — replace it with the real public address.
+## 3a. The sister site — one link, in the footer
+
+`src/config.ts`:
+
+```ts
+export const SISTER_SITE = {
+  name: "The Vintage Edit",
+  url: "https://REPLACE-WITH-SISTER-SITE-URL",   // ← the only thing to change
+};
+```
+
+**The footer link is the only place The Vintage Edit appears on the site.** The owner asked
+for the cross-promotion to be cut back, so the header link and the homepage band are gone —
+please do not add another one anywhere. The link renders in the footer of every page, from
+the `Elsewhere` column in `src/components/Chrome.tsx`.
+
+**Why there is no link on the site right now.** The address that used to be in this file
+(`https://thevintageedit.com`) was never confirmed with the owner and returned a server
+error. As with the enquiry address, a placeholder must not ship: while the value still
+contains `REPLACE-WITH-SISTER-SITE`, `SISTER_SITE_IS_PLACEHOLDER` is true and the footer
+prints *"The Vintage Edit — link coming soon"* as plain text instead of a link.
+
+**When the owner gives the real address**, paste it in as `url` above and nothing else needs
+touching: the tripwire turns itself off and the footer link appears on every page. Delete
+`REPLACE-WITH-SISTER-SITE` from the value — that string is the marker the check looks for, so
+an address that still contains it will keep showing the "coming soon" note.
 
 ## 4. Policies — shipping, returns and condition
 The `/policy` page (linked from the footer on every page) carries the shop's shipping line,
@@ -220,11 +244,19 @@ Nothing here needs changing unless the owner wants a different look.
 | What | Where |
 | --- | --- |
 | Colours (sage + sand) and type | the `@theme` block at the top of `src/styles/app.css` |
-| The monogram, header and footer | `src/components/Monogram.tsx` |
+| The mark (the `tSHE` ligature), header and footer | `src/components/Monogram.tsx` |
 | The standalone mark | `public/monogram.svg` |
-| Browser icons | `public/favicon.ico`, `public/icon-192.png`, `public/icon-512.png` |
+| Browser icons | `public/favicon.ico` (the SHE-only variant — see `brand/README.md`) |
+| App icons | `public/icon-192.png`, `public/icon-512.png` |
 | iOS home-screen icon | `public/apple-touch-icon.png` |
-| Social share card (1200×630) | `public/og-card.png` |
+| Social share card (1200×630) | `public/og-card.png`, composed from `brand/og-card.html` |
+| The mark's two unbuilt directions, and how to swap | `brand/` — see `brand/README.md` |
+
+The mark is the owner's wordplay: the initials **SHE** in the site's display serif, with a
+small lowercase **t** perched in front of them. The letterforms are paths, not live text, so
+the mark never depends on a webfont — and the favicon is a simplified SHE-only drawing on
+purpose, because the t is unreadable at 16px. `brand/README.md` covers the drawing, the two
+directions that were not built, and how to regenerate the icons and the share card.
 
 `SITE_URL` in `src/config.ts` is the address the share card is published under. When the
 shop is served from the business's own domain, change it there and link previews follow.
