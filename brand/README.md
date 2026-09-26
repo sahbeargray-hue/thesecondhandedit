@@ -76,7 +76,13 @@ browser renders them exactly. From `/home/team/shared/site` with the dev server 
 2. Wrap the 16/32/48 PNGs into `favicon.ico` (a 6-byte ICONDIR, one 16-byte ICONDIRENTRY per
    image, then the PNG buffers; every current browser accepts PNG inside ICO).
 3. The share card: copy `brand/og-card.html` into `public/`, screenshot `#card` at 1200x630
-   with the mark at `height: 67px`, save it as `public/og-card.png`, delete the copy again.
+   (viewport 1200x630, so the screenshot is the card and nothing else), save it as
+   `public/og-card.png`, delete the copy again. The card's top-left corner is the full
+   lockup, not the bare mark: `monogram.svg` at `height: 67px` with the name letterspaced
+   underneath at the footer lockup's own proportions scaled by 67/110 (width 159.39px,
+   `font-size: 6.7px`, `letter-spacing: 0.37em`, `#605858`, centred under the initials).
+   `SHARE_IMAGE_ALT` in `src/routes/__root.tsx` describes what the card draws, so if the
+   composition changes, change both.
 4. Delete the temporary page, then check the head tags in the served HTML and that
    `/monogram.svg`, `/icon.svg`, `/favicon.ico`, `/icon-192.png`, `/icon-512.png`,
    `/apple-touch-icon.png` and `/og-card.png` all answer 200.
