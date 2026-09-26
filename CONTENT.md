@@ -261,8 +261,9 @@ Nothing here needs changing unless the owner wants a different look.
 
 The mark is the owner's own drawing: a lowercase serif **t** in sage, its crossbar
 overhanging to the left, at the cap line in front of the initials **SHE**, with the **S** and
-**H** in ink and the **E** in sage. Underneath, in the footer, the name is letterspaced in
-grey, exactly as the owner drew the lockup. Every letterform is a path cut from the site's
+**H** in ink and the **E** in sage. Underneath, the name is letterspaced in
+grey, exactly as the owner drew the lockup: in the footer, and in the share card's own
+top-left corner (see `brand/README.md`). Every letterform is a path cut from the site's
 own Playfair Display 400, so the mark never depends on a webfont. The favicon and the app
 icons are a deliberate simplification (the three initials on an ink field) because the t is
 unreadable at 16px. `brand/README.md` has the measurements the rebuild was matched to, the
