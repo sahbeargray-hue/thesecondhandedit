@@ -1,3 +1,7 @@
+**Archive.** The owner then supplied their own mark (`brand/owner-logo/SHE.png`), and it
+won: none of the six below is built. They are kept as exploration only, and the
+`/mark-options` page they were drawn for has been deleted.
+
 # The six candidate marks
 
 The drawings for the private `/mark-options` page, one SVG per candidate, in the order the page

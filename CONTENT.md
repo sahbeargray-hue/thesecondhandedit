@@ -249,19 +249,24 @@ Nothing here needs changing unless the owner wants a different look.
 | What | Where |
 | --- | --- |
 | Colours (sage + sand) and type | the `@theme` block at the top of `src/styles/app.css` |
-| The mark (the `tSHE` ligature), header and footer | `src/components/Monogram.tsx` |
-| The standalone mark | `public/monogram.svg` |
-| Browser icons | `public/favicon.ico` (the SHE-only variant, see `brand/README.md`) |
+| The full lockup in the header (mark + name) | `src/components/Chrome.tsx` |
+| The mark inline in React (header, and the footer lockup) | `src/components/Monogram.tsx` |
+| The standalone mark, letters only: source of truth | `public/monogram.svg` |
+| The square icon, used for the browser and app icons | `public/icon.svg` |
+| Browser icons | `public/favicon.ico` (16/32/48, the initials-only variant, see `brand/README.md`) |
 | App icons | `public/icon-192.png`, `public/icon-512.png` |
 | iOS home-screen icon | `public/apple-touch-icon.png` |
-| Social share card (1200×630) | `public/og-card.png`, composed from `brand/og-card.html` |
-| The mark's two unbuilt directions, and how to swap | `brand/`, see `brand/README.md` |
+| Social share card (1200x630) | `public/og-card.png`, composed from `brand/og-card.html` |
+| The owner's own artwork, and the archived exploration | `brand/`, see `brand/README.md` |
 
-The mark is the owner's wordplay: the initials **SHE** in the site's display serif, with a
-small lowercase **t** perched in front of them. The letterforms are paths, not live text, so
-the mark never depends on a webfont, and the favicon is a simplified SHE-only drawing on
-purpose, because the t is unreadable at 16px. `brand/README.md` covers the drawing, the two
-directions that were not built, and how to regenerate the icons and the share card.
+The mark is the owner's own drawing: a lowercase serif **t** in sage, its crossbar
+overhanging to the left, at the cap line in front of the initials **SHE**, with the **S** and
+**H** in ink and the **E** in sage. Underneath, in the footer, the name is letterspaced in
+grey, exactly as the owner drew the lockup. Every letterform is a path cut from the site's
+own Playfair Display 400, so the mark never depends on a webfont. The favicon and the app
+icons are a deliberate simplification (the three initials on an ink field) because the t is
+unreadable at 16px. `brand/README.md` has the measurements the rebuild was matched to, the
+one place it is an approximation, and how to regenerate the icons and the share card.
 
 `SITE_URL` in `src/config.ts` is the address the share card is published under. When the
 shop is served from the business's own domain, change it there and link previews follow.
@@ -274,32 +279,3 @@ Selling a piece is a two-step job: `sold: true` in `src/data/items.ts` *and* the
 Payment Link deactivated in Stripe (section 6). The code is written so a sold piece can never
 render a buy action, but the Stripe link is the real control and the site cannot reach it.
 
-## 9. The mark options page (temporary, and the one exception)
-
-`/mark-options` is a private page that shows six candidate `tSHE` marks beside the built one so
-the owner can pick a number. It is **not** part of the shop and it is deliberately awkward to
-find: unlisted, `robots: noindex, nofollow`, absent from the header and footer, and no shop
-page links to it. Nothing on the shop pages changes while it exists.
-
-| What | Where |
-| --- | --- |
-| The page | `src/routes/mark-options.tsx` (the only route that uses any of this) |
-| The six marks' geometry, generated | `src/components/mark-options/marks.ts` |
-| Mark, header, footer lockup, favicon row | `src/components/mark-options/Preview.tsx` |
-| The true 16px rasters, generated | `src/components/mark-options/rasters.ts` |
-| Standalone SVG of each candidate | `brand/mark-options/01-wordmark.svg` and so on |
-
-The path data is emitted, not hand written: the letterforms are cut from the site's own Playfair
-Display outlines with fontTools (`400` for Ledger, `500` for the small t, `600` for SHE and for
-the Tall t), so a candidate is the brand type, not a new typeface. The 16px rasters are browser
-screenshots at device scale 1, which is why the page can show the real favicon pixels.
-
-**When the owner has picked a number:**
-
-1. Rebuild `public/monogram.svg`, the `PATHS`/`VIEW_BOX`/`MONOGRAM_ASPECT` in
-   `src/components/Monogram.tsx` and the icon set from the chosen file in `brand/mark-options/`
-   (or `brand/directions/02-wordmark.svg` / `03-tucked.svg`, which candidates 1 and 2 come from),
-   following section 8 and `brand/README.md`. Keep a simplified SHE-only favicon if the t does
-   not survive 16px: the page says, per candidate, whether it does.
-2. Delete this page: the route, `src/components/mark-options/` and the entry it leaves in the
-   generated route tree. `brand/mark-options/` can stay as the drawing record.

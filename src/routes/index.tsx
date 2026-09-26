@@ -36,20 +36,6 @@ function Home() {
 
   return (
     <>
-      {/* Owner-only preview bar: temporary while the mark is being chosen. It
-          ships with the /mark-options route and comes out with it once the owner
-          has picked, so the shop never carries it in public. */}
-      <div className="bg-sage-deep text-sand">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-3 gap-y-1 px-5 py-2.5 text-[0.78rem] sm:px-8">
-          <span className="label text-sand">Private preview</span>
-          <Link
-            to="/mark-options"
-            className="underline decoration-sand/40 underline-offset-4 transition-colors hover:decoration-sand"
-          >
-            Compare six logo options
-          </Link>
-        </div>
-      </div>
       {/* Hero */}
       <section className="mx-auto max-w-6xl px-5 pt-8 sm:px-8 sm:pt-14 lg:pt-20">
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-center lg:gap-16">

@@ -11,15 +11,16 @@ import { BUSINESS_NAME, SISTER_SITE, SISTER_SITE_IS_PLACEHOLDER } from "~/config
 export function SiteHeader() {
   return (
     <header className="border-line bg-cream/88 sticky top-0 z-40 border-b backdrop-blur-md">
-      {/* The mark costs the row ~22px on a phone, so it is a little smaller
-          there than on a wide screen and the wordmark keeps its own space. The
-          mark is a wide lockup (tSHE), so its width is set from its
-          proportions at each height (a square box would squash it). */}
+      {/* The mark is the owner's lockup: the small t rises above the cap line, so
+          its box is taller than the initials and it is sized by height at each
+          breakpoint, with the width derived from its proportions (a square box
+          would squash it). 25px on a phone keeps the initials at the same optical
+          size the old mark had at 22px; 34px does the same on a wide screen. */}
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-3 sm:gap-6 sm:px-8 sm:py-4">
         <Link to="/" className="group flex items-center gap-2 sm:gap-2.5">
           <Monogram
-            height={22}
-            className="shrink-0 sm:h-[30px] sm:w-[77.04px]"
+            height={25}
+            className="shrink-0 sm:h-[34px] sm:w-[80.88px]"
           />
           <span className="font-display text-ink text-[0.9rem] leading-none tracking-[0.01em] whitespace-nowrap sm:text-[1.15rem]">
             {BUSINESS_NAME}
@@ -51,11 +52,8 @@ export function SiteFooter() {
       <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
         <div className="grid gap-10 sm:grid-cols-3">
           <div>
-            <div className="flex items-center gap-2.5">
-              <Monogram height={30} className="shrink-0" />
-              <p className="font-display text-ink text-lg">{BUSINESS_NAME}</p>
-            </div>
-            <p className="text-muted mt-3 max-w-xs text-[0.85rem] leading-relaxed">
+            <FooterLockup />
+            <p className="text-muted mt-5 max-w-xs text-[0.85rem] leading-relaxed">
               A small shop for second-hand clothing. Each piece is listed once and sold
               once.
             </p>
@@ -104,5 +102,33 @@ export function SiteFooter() {
         </p>
       </div>
     </footer>
+  );
+}
+
+/**
+ * The owner's full lockup, as their own logo file draws it: the mark, and then the
+ * business name letterspaced underneath in their grey.
+ *
+ * The proportions are measured off `brand/owner-logo/SHE.png`, not chosen:
+ *
+ *   - the name is centred under the three initials rather than under the whole
+ *     mark, so the t's overhang on the left is not counted: the initials' ink runs
+ *     from 13.51% to 99.42% of the mark's width;
+ *   - the name's cap height is 9.05% of the initials' cap height (11px against the
+ *     mark's 110px, 12px against 120px on a wide screen);
+ *   - the tracking is 0.37em, the owner's own letterspacing;
+ *   - their baseline-to-name gap is 0.139 of the initials' cap height, the rest of
+ *     which the mark's own bottom padding already supplies.
+ *
+ * Colours are the owner's too: ink and sage in the mark, #605858 for the name.
+ */
+function FooterLockup() {
+  return (
+    <div className="flex w-[261.68px] flex-col items-start sm:w-[285.47px]">
+      <Monogram height={110} className="shrink-0 sm:h-[120px] sm:w-[285.47px]" />
+      <p className="mt-[7px] w-full pr-[0.58%] pl-[13.51%] text-center text-[11px] leading-none tracking-[0.37em] text-[#605858] uppercase sm:text-[12px]">
+        {BUSINESS_NAME}
+      </p>
+    </div>
   );
 }

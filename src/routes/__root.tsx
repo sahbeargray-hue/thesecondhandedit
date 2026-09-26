@@ -12,11 +12,11 @@ const SHARE_IMAGE = "/og-card.png";
 const SHARE_TITLE = `${BUSINESS_NAME}: second-hand clothing, one piece at a time`;
 const SHARE_DESCRIPTION =
   "A small shop for second-hand clothing: one-of-a-kind pieces, photographed properly and described honestly. Each piece is listed once and sold once.";
-/* Matches what public/og-card.png actually draws: the tSHE lockup at the top
-   left (S and E in ink, the middle H and the small t in deep sage), the headline,
-   and the shop name above the closing rule. Keep the two in step, the card is
-   regenerated from src/routes/og-card-preview.tsx. */
-const SHARE_IMAGE_ALT = `${BUSINESS_NAME}: the tSHE serif monogram in ink and deep sage on cream, above the headline "Every piece here is the only one."`;
+/* Matches what public/og-card.png actually draws: the owner's lockup at the top
+   left (a small sage t with its crossbar overhanging to the left, then the ink S
+   and H and the sage E), the headline, and the shop name above the closing rule.
+   Keep the two in step, the card is regenerated from brand/og-card.html. */
+const SHARE_IMAGE_ALT = `${BUSINESS_NAME}: the serif lockup, a small sage t with its crossbar reaching out to the left in front of the ink initials S and H and the sage E, on cream, above the headline "Every piece here is the only one."`;
 
 export const Route = createRootRoute({
   head: () => ({
@@ -49,7 +49,7 @@ export const Route = createRootRoute({
       // Icons: the SVG mark for anything modern, PNG rasterisations for the
       // rest, favicon.ico as the bare-domain fallback, apple-touch-icon for an
       // iOS home-screen save.
-      { rel: "icon", type: "image/svg+xml", sizes: "any", href: "/monogram.svg" },
+      { rel: "icon", type: "image/svg+xml", sizes: "any", href: "/icon.svg" },
       { rel: "icon", type: "image/png", sizes: "192x192", href: "/icon-192.png" },
       { rel: "icon", type: "image/png", sizes: "512x512", href: "/icon-512.png" },
       { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
