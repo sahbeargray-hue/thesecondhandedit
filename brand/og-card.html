@@ -6,13 +6,13 @@
   plain CSS with the same values as the site's tokens. To regenerate
   public/og-card.png after a change to the mark or the headline:
 
-    1. copy this file to /home/team/shared/site/public/_card-source.html
+    1. copy this file to public/_card-source.html in the site directory
        (the dev server must be running: it serves /fonts/*.woff2 and /monogram.svg)
     2. agent-browser set viewport 1300 800 1
        agent-browser open http://localhost:3000/_card-source.html
        agent-browser wait 1200
-       agent-browser screenshot "#card" /home/team/shared/site/public/og-card.png
-    3. delete /home/team/shared/site/public/_card-source.html again
+       agent-browser screenshot "#card" public/og-card.png
+    3. delete public/_card-source.html again
 
   The card must match SHARE_IMAGE_ALT in src/routes/__root.tsx: if you redraw
   the card, redraw that description too.

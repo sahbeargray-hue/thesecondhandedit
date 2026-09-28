@@ -63,12 +63,12 @@ to their tracking. Letter widths differ by up to 15%, the tracking and the cap r
 hairline and the initials turn to mush, so `public/icon.svg` carries the three initials only, in
 the owner's colours (cream S and H, sage E) on a solid ink field, which is what survives a tab.
 It was judged on the real 16px raster, not on the drawing
-(`/home/team/shared/screenshots/71-favicon-16px-magnified-6x.png`).
+(the team's shared `screenshots/` folder, `71-favicon-16px-magnified-6x.png`).
 
 ## Regenerating the rasters
 
 No image library is added to the repo, and none is needed: the letterforms are paths, and a
-browser renders them exactly. From `/home/team/shared/site` with the dev server running:
+browser renders them exactly. From the site directory (the repo root) with the dev server running:
 
 1. Put a temporary page in `public/` with `icon.svg` as `<img width="N" height="N">` at each
    size, screenshot each element at device scale 1 (so the browser does the rasterising), and
