@@ -146,9 +146,9 @@ clauses or extra warranties.
 ## 5. Taking payment: one Stripe Payment Link per piece
 Payment is part of this first version, and every piece is one of one, so it is bought on
 its own: **one Stripe Payment Link per piece**, created by hand in the business's own Stripe
-account. That is the whole checkout: there is no cart, no basket, no Stripe API integration
-in the code and no keys in this repository. The site's only job is to send the buyer to that
-piece's link, in AUD, with the A$12 flat-rate shipping added there.
+account. That is the whole checkout: there is no cart, no basket, no database, no Stripe API
+integration in the code and no keys in this repository. The site's only job is to send the
+buyer to that piece's link, in AUD, with the A$12 flat-rate shipping added there.
 
 **Who does what.** The owner (or the team lead acting for them) creates the price, the shipping
 option and the Payment Link in the business's Stripe account and copies the finished link into
@@ -274,7 +274,7 @@ shop is served from the business's own domain, change it there and link previews
 
 Payment is **in scope**: one Stripe Payment Link per piece (section 5), and anything that is
 not a piece for sale is handled by email. Out of scope for this first version, on purpose:
-accounts, cart/basket, seller tools and inventory admin.
+accounts, cart/basket, a database, seller tools and inventory admin.
 
 Selling a piece is a two-step job: `sold: true` in `src/data/items.ts` *and* the piece's
 Payment Link deactivated in Stripe (section 6). The code is written so a sold piece can never

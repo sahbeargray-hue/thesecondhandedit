@@ -34,8 +34,8 @@ in `.run/`.
 The site is static today, but adding backend behavior is one file away: no second
 process, no extra port, all served on the same port 3000:
 
-- **Server function**: call server-only code (DB, secrets, fetch) directly from a
-  component:
+- **Server function**: call server-only code (secrets, fetch, other server-side work)
+  directly from a component:
 
   ```tsx
   import { createServerFn } from "@tanstack/react-start";
@@ -58,30 +58,22 @@ Read the owner's secrets from `process.env` in server-only code. Never put them 
 `.env` file: `.env` files are not published, so a value that only lives there is
 missing on the live site.
 
-## Adding a database
+## Where the shop's data lives
 
-When the site needs to store data (form submissions, content, accounts), connect a
-database rather than writing to files:
+The shop has **no database**, on purpose. Every piece is static, typed data in this
+repository: one object per listing in `src/data/items.ts`, reviewed like code and shipped
+with the site. There is no cart, no basket, no accounts and no inventory service, and no
+connection string, key or query anywhere in the code (`README.md` and `CONTENT.md` say the
+same, and `CONTENT.md` is the guide to editing what the shop shows).
 
-1. Call `discover_tools` for a database (e.g. "serverless Postgres with a free
-   tier"). The owner connects it (Neon) from the card, which provides `DATABASE_URL`.
-2. Query it from server-only code with the built-in helper: never from the client:
+Checkout is **one Stripe Payment Link per piece**: the piece's page sends the buyer to that
+link, in AUD, with the A$12 flat-rate shipping attached inside Stripe and Stripe collecting
+the buyer's address. The site holds no Stripe key, calls no Stripe API and never creates a
+link; a person creates it in Stripe and pastes the URL into that piece's `paymentLink`
+field.
 
-   ```tsx
-   import { createServerFn } from "@tanstack/react-start";
-   import { sql } from "~/db";
-
-   const getPosts = createServerFn().handler(async () => {
-     const rows = await sql()`select id, title, created_at from posts`;
-     // Coerce non-primitive columns before returning: timestamps come back as JS
-     // Dates, which React will not render:
-     return rows.map((r) => ({ ...r, created_at: String(r.created_at) }));
-   });
-   ```
-
-`DATABASE_URL` is in your environment automatically once connected, and it reaches the
-published site too: saving or changing it restarts the live site with the new value
-within seconds, no republish needed. The same code works in the preview and in
-production. (On external hosting via `bun run go-live`, re-run it after connecting so
-that host picks up `DATABASE_URL`.) One database serves both the preview and the live
-site.
+If a later version of the shop ever needs to store data (form submissions, content,
+accounts), add a database rather than writing to files: request one (for example serverless
+Postgres with a free tier), read its connection string from `process.env` in server-only
+code and never in client code, and keep the queries inside a `createServerFn()` handler or
+an `src/routes/api/*` route.

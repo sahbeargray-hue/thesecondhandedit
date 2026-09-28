@@ -17,12 +17,12 @@ bun run build    # production build
 - `src/config.ts`: the few values only the owner can supply.
 
 ## How selling works
-One **Stripe Payment Link per piece**, in AUD, with the A$12 flat-rate shipping rate attached, and Stripe collecting the buyer's shipping address. There is no cart, no basket, no accounts and no database. Pieces sell for A$25–120.
+One **Stripe Payment Link per piece**, in AUD, with the A$12 flat-rate shipping rate attached, and Stripe collecting the buyer's shipping address. Every piece is static data in `src/data/items.ts`, and there is no cart, no basket, no accounts and no database. Pieces sell for A$25–120.
 
 When a piece sells: mark it sold in the item data **and** deactivate its Payment Link in Stripe. The site is defensive (a sold piece never renders a buy action), but a live link can still take money.
 
 ## On the base codebase
-The owner's brief called for this site to be built from a copy of The Vintage Edit codebase. That codebase was reviewed and deliberately **not** imported: it is the same TanStack Start scaffold this site already uses (an older revision of the same template), plus TVE-specific lookbook/styling-box and gift-certificate features this business's brief explicitly bans, and a database-backed single-box order flow replaced here by per-piece Stripe Payment Links. The Vintage Edit repository itself is untouched.
+The owner's brief called for this site to be built from a copy of The Vintage Edit codebase. That codebase was reviewed and deliberately **not** imported: it is the same TanStack Start scaffold this site already uses (an older revision of the same template), plus TVE-specific lookbook/styling-box and gift-certificate features this business's brief explicitly bans, and a database-backed single-box order flow replaced here by per-piece Stripe Payment Links. The template's own database scaffolding went the same way: nothing imported it, and the shop has no database to talk to, so it was deleted rather than left in place to read as one. The Vintage Edit repository itself is untouched.
 
 ## Rules that are not style preferences
 - The returns policy wording is verbatim: do not paraphrase or "improve" it (`src/data/policies.ts`, checked by `scripts/check-policy-wording.mjs`).

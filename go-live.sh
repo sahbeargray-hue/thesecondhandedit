@@ -3,7 +3,6 @@
 #
 # Contract:
 #   VERCEL_TOKEN   (required): collected from the owner via the go-live flow.
-#   DATABASE_URL   (optional): passed as a runtime env var when the site uses a DB.
 #   VERCEL_SCOPE   (optional): team slug; auto-resolved from the token if unset.
 #   VERCEL_TEAM_ID (optional): team id; auto-resolved from the token if unset.
 #
@@ -42,12 +41,13 @@ bash ./build-vercel.sh
 
 SCOPE_ARGS=()
 if [ -n "${VERCEL_SCOPE:-}" ]; then SCOPE_ARGS=(--scope "$VERCEL_SCOPE"); fi
-ENV_ARGS=()
-if [ -n "${DATABASE_URL:-}" ]; then ENV_ARGS=(-e "DATABASE_URL=$DATABASE_URL"); fi
+# No runtime environment variables are passed: the shop has no database, no server-side keys
+# and nothing to configure on the host. Pieces are static data in the repo, and checkout is
+# one Stripe Payment Link per piece, opened from the piece's own page.
 
 echo "==> deploying${VERCEL_SCOPE:+ (scope: $VERCEL_SCOPE)}"
 DEPLOY_OUT="$($VERCEL deploy --prebuilt --yes --token "$VERCEL_TOKEN" \
-  --name "$PROJECT_NAME" "${SCOPE_ARGS[@]}" "${ENV_ARGS[@]}" 2>&1)" || {
+  --name "$PROJECT_NAME" "${SCOPE_ARGS[@]}" 2>&1)" || {
   printf '%s\n' "$DEPLOY_OUT" >&2
   exit 1
 }
