@@ -12,21 +12,38 @@ Everything the shop shows comes from two files. Nothing else needs touching.
 
 ## 1. Adding a real piece
 
-1. Put the photograph in `public/images/items/`: e.g. `public/images/items/camel-coat.jpg`.
-   A portrait (4:5) photo works best; the grid crops to that shape.
-   House style: garment only, plain warm neutral background, soft daylight, no faces,
-   no visible brand labels/logos.
-2. Copy one object in the `items` array in `src/data/items.ts` and edit it. Every field
-   is required except `brand`: omit `brand` when the piece has no visible label rather
-   than inventing one.
-3. `price` is a whole number in the shop currency, Australian dollars (`CURRENCY` in
-   `src/config.ts`). Pieces sell for **A$25–120**, so keep every price inside that band.
-   Every price on the site is printed from that one setting, so it reads **A$118**, never a
-   bare `$118`, and it matches the **A$12** flat-rate shipping line. `slug` becomes the URL:
-   `/shop/<slug>`.
-4. When a real piece is in, set `sample: false` on it (or delete the field's `true`).
-5. Set `paymentLink` to that piece's Stripe Payment Link, see section 5 below. A real piece
-   without one shows a loud "not for sale yet" warning on its page instead of a Buy button.
+**What arrives from the owner**, and where each part goes:
+
+- **The photograph**, into `public/images/items/`, referenced as `/images/items/<file>.jpg`.
+  A portrait (4:5) photo works best: the grid crops to that shape. House style: garment only,
+  plain warm neutral background, soft daylight, no faces, no visible brand labels or logos.
+- **The size** as marked, plus a fit hint where it helps, e.g. `M (fits a UK 12–14)`.
+- **The condition**, as one of the three grades in `CONDITIONS`: `Excellent`, `Very good`, `Good`.
+- **The price**, a whole number of Australian dollars between **A$25 and A$120**.
+
+**Then add one object to the `items` array in `src/data/items.ts`.** Copy an existing entry and
+edit it, and delete that entry's `sample: true` (a real piece is `sample: false`). Every field
+means this:
+
+| Field | What it is |
+| --- | --- |
+| `slug` | The URL ending: `/shop/<slug>`. Lowercase, hyphens. |
+| `name` | The piece name as it should read on the card and the item page. |
+| `brand` | Optional. The visible label on the piece: omit it rather than inventing one. |
+| `price` | Whole number in the shop currency, AUD (`CURRENCY` in `src/config.ts`). Keep it inside the A$25–120 band: every price prints as **A$118**, never a bare `$118`. |
+| `size` | Size as marked, plus the fit hint where useful. |
+| `condition` | One of the three grades in `CONDITIONS`. |
+| `category` | One of the values in `CATEGORIES`: it drives the shop's filter chips. |
+| `image`, `imageAlt` | The main photograph's path and a plain description of it. |
+| `gallery` | Optional extra photographs, shown under the main one. |
+| `summary` | One line for the grid card. |
+| `notes` | A short paragraph of honest detail for the item page. |
+| `measurements` | Label/value pairs in cm, listed on the item page. |
+| `sample` | `false` for a real piece. `true` is only for an example listing, and it prints a visible **Sample listing** badge. |
+| `paymentLink` | That piece's own Stripe Payment Link: see below. |
+| `sold` | `true` once the piece has gone: see below. |
+
+Here is the shape, filled in:
 
 ```ts
 {
@@ -44,9 +61,40 @@ Everything the shop shows comes from two files. Nothing else needs touching.
   notes: "A paragraph of honest detail for the item page.",
   measurements: [{ label: "Chest, underarm to underarm", value: "54 cm" }],
   sample: false,
-  paymentLink: "https://buy.stripe.com/…",   // one Stripe Payment Link per piece, see section 5
+  paymentLink: "https://buy.stripe.com/…",   // one Stripe Payment Link per piece, see below
 }
 ```
+
+**The payment link is made in Stripe, by hand, and never by code.** The site does not create,
+guess or invent a link: it only sends the buyer to the URL sitting in `paymentLink`. One link
+per piece, in AUD, with the **A$12 flat-rate shipping rate attached** and the buyer's shipping
+address collected at checkout. Paste that URL into `paymentLink` on that piece. A real piece
+with no `paymentLink` shows a loud "not for sale yet" warning on its page instead of a Buy
+action, which is deliberate: no real piece may sit in the shop unable to be bought. Details in
+section 5.
+
+**When it sells**, set `sold: true` on the piece **and deactivate that piece's Payment Link in
+Stripe, in the same sitting**. Marking it sold hides it from the grid, the homepage and every
+count, and turns its page into a Sold state with no action of any kind, but it does not switch
+the Stripe link off. **A live link on a sold piece can still take a buyer's money.** The link is
+the real control, the flag is only the display. Details in section 6.
+
+**The check to run afterwards**, with the dev server running:
+
+```bash
+bun run build                            # must exit 0
+bun scripts/check-policy-wording.mjs     # the returns wording is still verbatim
+curl -s localhost:3000/shop | grep -a -o "Sample listing"  | wc -l   # 0 once every piece is real
+curl -s localhost:3000/shop | grep -a -o "example listing" | wc -l   # 0
+curl -s localhost:3000/     | grep -a -o "sample listings" | wc -l   # 0
+```
+
+Use `grep -a`: the served HTML makes grep report "binary file matches" and print no count
+without it. While the ten samples are still on the grid the counts read 10, 1 and 1.
+
+Then open one real piece's page: it carries exactly one action, "Buy this piece: A$<price> +
+A$12 shipping", with the shipping and returns line beside it, and no "not for sale yet" alert.
+A page showing that alert is a real piece missing its `paymentLink`.
 
 ## 2. Turning the samples off
 
@@ -60,6 +108,22 @@ note saying the listings are examples. While any item has `sample: true`:
 Delete the sample entries (or clear the array) and add the owner's real pieces; the badges
 and notes disappear on their own. **Never** remove the badge from a listing that is not a
 real piece. Presenting a fabricated piece as real is the one thing this shop cannot do.
+
+**Turn the whole grid over in one sitting.** The shop's note and the homepage's note are keyed
+off *any* sample still on the grid (`HAS_SAMPLE_LISTINGS` in `src/data/items.ts`), not off the
+piece being looked at, so a half-migrated grid ships copy that is wrong:
+
+- with nine samples left and one real piece, `/shop` still prints "Every piece below is an
+  example listing ... and nothing here is for sale yet" while that real piece, a few lines below
+  the note, carries a live Buy action;
+- the homepage still prints "The pieces above are sample listings" while one of the cards above
+  that line is real and buyable.
+
+Both lines clear the moment the last `sample: true` goes, so avoid the halfway state by swapping
+every piece over in one go: delete the sample entries and add the real pieces together. The
+badge itself is per piece (`item.sample`), so it comes and goes one piece at a time, and it is
+also the audit trail that a listing is not yet real. (Measured 2026-09-28 by flipping a single
+entry to a real piece with a payment link, and reading the served pages.)
 
 ## 3. The enquiry address
 
