@@ -22,7 +22,7 @@ export default defineConfig({
     // restated), patterns containing "/" match the ABSOLUTE path (so dir
     // patterns need a leading **/), and `allow` left to its default widens to
     // the nearest workspace root, a stray .git or workspaces package.json in
-    // /home/team/shared would expose the whole shared dir.
+    // the shared parent directory would expose everything beside the site.
     fs: {
       strict: true,
       allow: [import.meta.dirname],
