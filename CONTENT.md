@@ -99,31 +99,33 @@ A page showing that alert is a real piece missing its `paymentLink`.
 ## 2. Turning the samples off
 
 The shop currently runs on ten example listings. Each one has `sample: true`, which puts a
-visible **Sample listing** badge on its card and item page, and makes the shop page print a
-note saying the listings are examples. While any item has `sample: true`:
+visible **Sample listing** badge on its card and item page, and makes the shop and home pages
+print a note saying those listings are examples.
 
-- the badge shows on the shop grid and on that item's page,
-- `HAS_SAMPLE_LISTINGS` is true, so the shop page and homepage print the sample note.
+**Pieces can be swapped over a few at a time.** Both notes are decided per page by
+`sampleNoteState()` in `src/data/items.ts`, which counts the pieces actually on show (sold
+pieces are not on show), so all three states ship correct copy:
 
-Delete the sample entries (or clear the array) and add the owner's real pieces; the badges
-and notes disappear on their own. **Never** remove the badge from a listing that is not a
-real piece. Presenting a fabricated piece as real is the one thing this shop cannot do.
+- **every piece on show is a sample**: `/shop` prints "Every piece below is an example listing
+  ... nothing here is for sale yet" and the homepage prints "The pieces above are sample
+  listings ...";
+- **samples and real pieces side by side**: `/shop` prints "The pieces marked Sample listing are
+  examples ... Everything else below is a real piece, one of a kind." and the homepage prints
+  "Some of the pieces above are examples, marked Sample listing ...". Neither line claims that
+  nothing is for sale, and neither calls a real piece a sample;
+- **no samples on show**: no note at all.
 
-**Turn the whole grid over in one sitting.** The shop's note and the homepage's note are keyed
-off *any* sample still on the grid (`HAS_SAMPLE_LISTINGS` in `src/data/items.ts`), not off the
-piece being looked at, so a half-migrated grid ships copy that is wrong:
+A sold real piece cannot switch the mixed wording on by itself, because a sold piece is not on
+show.
 
-- with nine samples left and one real piece, `/shop` still prints "Every piece below is an
-  example listing ... and nothing here is for sale yet" while that real piece, a few lines below
-  the note, carries a live Buy action;
-- the homepage still prints "The pieces above are sample listings" while one of the cards above
-  that line is real and buyable.
+The badge is per piece (`item.sample`), so it comes and goes one piece at a time, and it is also
+the audit trail that a listing is not yet real. **Never** remove the badge from a listing that is
+not a real piece: presenting a fabricated piece as real is the one thing this shop cannot do.
+Delete the sample entries (or clear the array) as the real pieces arrive; the badges and the
+notes sort themselves out.
 
-Both lines clear the moment the last `sample: true` goes, so avoid the halfway state by swapping
-every piece over in one go: delete the sample entries and add the real pieces together. The
-badge itself is per piece (`item.sample`), so it comes and goes one piece at a time, and it is
-also the audit trail that a listing is not yet real. (Measured 2026-09-28 by flipping a single
-entry to a real piece with a payment link, and reading the served pages.)
+(All three states measured 2026-09-28, including one real piece among nine samples and five of
+ten, at 320, 390, 768 and 1440px.)
 
 ## 3. The enquiry address
 
