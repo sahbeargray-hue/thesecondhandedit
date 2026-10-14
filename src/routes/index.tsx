@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 
 import { ItemCard } from "~/components/ItemCard";
 import { BUSINESS_NAME } from "~/config";
-import { HAS_SAMPLE_LISTINGS, availableItems } from "~/data/items";
+import { MIXED_SAMPLE_NOTE_HOME, availableItems, sampleNoteState } from "~/data/items";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -33,6 +33,10 @@ function Home() {
   const featured = FEATURED_SLUGS.map((slug) =>
     availableItems.find((item) => item.slug === slug),
   ).filter((item) => item !== undefined);
+  // Decided from `featured`, the cards this page actually renders: the note
+  // must never call a real card above it a sample, and a sold piece is not
+  // featured at all, so it cannot switch the note on by itself.
+  const note = sampleNoteState(featured);
 
   return (
     <>
@@ -119,10 +123,20 @@ function Home() {
           </p>
         )}
 
-        {HAS_SAMPLE_LISTINGS ? (
+        {/* One paragraph, and which one it is depends on the cards above it: the
+            all-samples wording while every featured card is a sample, the
+            sampled-cards-only wording once a real piece is among them, nothing
+            once the samples are gone. */}
+        {note !== null ? (
           <p className="text-muted border-line mt-8 border-t pt-4 text-[0.78rem] leading-relaxed">
-            The pieces above are sample listings, shown so the shop can be browsed end to
-            end before the first real drop arrives.
+            {note === "mixed" ? (
+              MIXED_SAMPLE_NOTE_HOME
+            ) : (
+              <>
+                The pieces above are sample listings, shown so the shop can be browsed end to
+                end before the first real drop arrives.
+              </>
+            )}
           </p>
         ) : null}
       </section>

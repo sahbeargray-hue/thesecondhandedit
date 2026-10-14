@@ -337,8 +337,10 @@ export const items: Item[] = [
   },
 ];
 
-/** True while the shop contains any sample listings. */
-export const HAS_SAMPLE_LISTINGS = items.some((item) => item.sample);
+/** True while this piece is an example listing rather than a real piece. */
+export function isSample(item: Item): boolean {
+  return item.sample === true;
+}
 /**
  * Has this piece gone? A sold piece is hidden by the shop grid and the homepage,
  * and its own page renders no action at all - see the item route.
@@ -376,9 +378,45 @@ export function isUnbuyable(item: Item): boolean {
   return !isSold(item) && !item.sample && !item.paymentLink;
 }
 
-/** The line shown once at the top of the shop while samples are on show. */
+/**
+ * Which sample note a page shows, decided from the pieces that page is actually
+ * showing (`shown` on the shop, `featured` on the homepage), never from the
+ * whole `items` array: a sample or a sold piece the reader cannot see must not
+ * speak for the page. A sold piece is not shown anywhere, so it can never
+ * switch a note on by itself.
+ *
+ * "all"    Every shown piece is a sample, so the note may speak for the list.
+ * "mixed"  Samples and real pieces share the list. The note must describe the
+ *          sampled pieces only. It also must not promise that everything else
+ *          can be bought: a real piece is one of a kind, and a real piece
+ *          without a `paymentLink` is enquiry only.
+ * null     No samples among the shown pieces (the empty list included): print
+ *          nothing at all.
+ */
+export type SampleNoteState = "all" | "mixed" | null;
+
+export function sampleNoteState(shown: Item[]): SampleNoteState {
+  const samples = shown.filter(isSample).length;
+  if (samples === 0) return null;
+  if (samples === shown.length) return "all";
+  return "mixed";
+}
+
+/** The line shown once at the top of the shop while every piece is a sample. */
 export const SAMPLE_NOTE =
   "Every piece below is an example listing while we photograph the first real drop: the photos, sizes, conditions and prices are placeholders, and nothing here is for sale yet.";
+
+/**
+ * The shop's line while samples and real pieces share the grid. It names the
+ * sampled pieces only, and claims nothing about the real pieces beyond what is
+ * true of every one of them: that each is a real piece and one of a kind.
+ */
+export const MIXED_SAMPLE_NOTE_SHOP =
+  "The pieces marked Sample listing are examples while we photograph the first real drop: their photos, sizes, conditions and prices are placeholders, and they are not for sale. Everything else below is a real piece, one of a kind.";
+
+/** The homepage's line while the featured row holds samples and real pieces. */
+export const MIXED_SAMPLE_NOTE_HOME =
+  "Some of the pieces above are examples, marked Sample listing, while we photograph the first real drop.";
 
 /** Look one up by slug. Returns undefined for an unknown slug. */
 export function getItem(slug: string): Item | undefined {

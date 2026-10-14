@@ -3,7 +3,13 @@ import { useState } from "react";
 
 import { ItemCard } from "~/components/ItemCard";
 import { PolicyLine } from "~/components/PolicyLine";
-import { CATEGORIES, HAS_SAMPLE_LISTINGS, SAMPLE_NOTE, availableItems } from "~/data/items";
+import {
+  CATEGORIES,
+  MIXED_SAMPLE_NOTE_SHOP,
+  SAMPLE_NOTE,
+  availableItems,
+  sampleNoteState,
+} from "~/data/items";
 
 export const Route = createFileRoute("/shop/")({
   component: Shop,
@@ -31,6 +37,10 @@ function Shop() {
       : availableItems.filter((item) => item.category === category);
   const chips = [ALL, ...CATEGORIES];
   const nothingLeft = availableItems.length === 0;
+  // Decided from `shown`, the list the grid itself renders: while samples and
+  // real pieces share the grid the note names the sampled pieces only, and a
+  // sold piece (which never reaches `shown`) cannot switch it on by itself.
+  const note = sampleNoteState(shown);
 
   return (
     <section className="mx-auto max-w-6xl px-5 pt-10 sm:px-8 sm:pt-16">
@@ -45,9 +55,13 @@ function Shop() {
         </p>
       </header>
 
-      {HAS_SAMPLE_LISTINGS ? (
+      {/* One paragraph, and which one it is depends on the pieces below it:
+          the all-samples wording while every piece on show is a sample, the
+          sampled-pieces-only wording once real pieces join them, nothing once
+          the samples are gone. */}
+      {note !== null ? (
         <p className="text-muted border-sand-deep bg-sand/50 mt-7 border px-4 py-3.5 text-[0.8rem] leading-relaxed">
-          {SAMPLE_NOTE}
+          {note === "mixed" ? MIXED_SAMPLE_NOTE_SHOP : SAMPLE_NOTE}
         </p>
       ) : null}
 
@@ -127,3 +141,4 @@ function Shop() {
     </section>
   );
 }
+
